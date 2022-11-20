@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 8vh;
+
+  color: var(--light-secondary);
+
+  &__title {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  &__button {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+
+    width: 101px;
+    height: 40px;
+
+    color: inherit;
+
+    background: var(--main-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+  }
+}

@@ -1,26 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "target": "es2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
     "noFallthroughCasesInSwitch": true,
+    "declaration": false,
     "module": "esnext",
     "moduleResolution": "node",
+    "rootDir": "./src",
+    "baseUrl":"./src",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "jsx": "react-jsx",
+    "types": ["jest","node"],
+    "paths": {
+      "*": ["typings/add.d.ts", "*"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src","typings/add.d.ts"],
+  "typeRoots": ["node_modules/@types", "./typings/app.d.ts"]
 }
