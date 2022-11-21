@@ -1,5 +1,6 @@
 import moment from "moment"
 import { useTypedSelector } from "store"
+import { backgroundColorAssign } from "../utils/backgroundColorAssign"
 import "./chart.scss"
 
 export const Chart = () => {
@@ -19,13 +20,16 @@ export const Chart = () => {
 
       if (tasksStartDay) {
         const filteredArray = daysArray.filter((day) => day.dataset.date == tasksStartDay)
-        console.log("FI", filteredArray)
         left = filteredArray[0].offsetLeft
       }
 
       if (endDay) {
         const filteredArray = daysArray.filter((day) => day.dataset.date == endDay)
-        width = filteredArray[0].offsetLeft - left
+        const offset = filteredArray[0].offsetLeft + filteredArray[0]?.parentElement!.parentElement!.offsetLeft
+        if (offset) {
+          console.log(offset)
+          width = offset + daysArray[1].offsetLeft - left
+        }
       }
 
       // apply css
@@ -33,12 +37,13 @@ export const Chart = () => {
       el.style.width = `${width}px`
 
       el.style.backgroundColor = `${el.dataset.color}`
+      el.style.border = `1px solid ${el.dataset.border}`
       el.style.opacity = "1"
     })
   }
   const headerArray: any = []
   function createHeader(startDate: number) {
-    let dateForCycle = moment.unix(startDate).format("LLL") // Дата начала
+    let dateForCycle = moment.unix(startDate).subtract(1, "days").format("LLL") // Дата начала
 
     for (let week = 0; week < 8; week++) {
       const listOfDays = []
@@ -59,16 +64,19 @@ export const Chart = () => {
           .replace(/\b(\d{1})\b/g, "0$1"),
         data: (
           <ul className="chart__days">
-            {listOfDays.map((item: any) => (
-              <li
-                className="chart__days__item"
-                data-date={`${moment(item)
-                  .format("M-D")
-                  .replace(/\b(\d{1})\b/g, "0$1")}`}
-              >
-                {moment(item).format("D")}
-              </li>
-            ))}
+            {listOfDays.map((item: any) => {
+              console.log(item)
+              return (
+                <li
+                  className="chart__days__item"
+                  data-date={`${moment(item)
+                    .format("M-D")
+                    .replace(/\b(\d{1})\b/g, "0$1")}`}
+                >
+                  {moment(item).format("D")}
+                </li>
+              )
+            })}
           </ul>
         ),
       })
@@ -93,8 +101,16 @@ export const Chart = () => {
         <ul className="chart-bars">
           {chartData.chartBody.map((item: any) => {
             return (
-              <li data-duration={`${item.startDate};${item.endDate}`} data-color="#b03532">
-                {item.title}
+              <li
+                className="chart-bars__item"
+                data-duration={`${item.startDate};${item.endDate}`}
+                data-color={`var(${backgroundColorAssign(item.nestedLvl)})`}
+                data-border={`var(${backgroundColorAssign(item.nestedLvl)})`.replace(
+                  "--additional-",
+                  "--additional-border-",
+                )}
+              >
+                <span className="chart-bars__item__title">{item.title}</span>
               </li>
             )
           })}

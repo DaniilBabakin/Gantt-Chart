@@ -8,14 +8,21 @@ export const List = () => {
   const charts = useTypedSelector((state) => state.chartsData.data)
   const dispatch = useDispatch()
   let nestedLvl = 1
-  let chartBody: any = []
+  let chartBody: any = [
+    {
+      nestedLvl: nestedLvl ,
+      startDate: transformPeriod(charts.chart.period_start),
+      endDate: transformPeriod(charts.chart.period_end),
+      title: charts.chart.title,
+    },
+  ]
   const transformSubToHtml = (subItem?: ChartType[]) => {
     nestedLvl = nestedLvl + 1
-
     if (subItem) {
       return subItem.map((item) => {
         chartBody = Object.assign([], chartBody)
         chartBody.push({
+          nestedLvl: nestedLvl,
           startDate: transformPeriod(item.period_start),
           endDate: transformPeriod(item.period_end),
           title: item.title,
