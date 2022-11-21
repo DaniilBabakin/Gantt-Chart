@@ -5,9 +5,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 30vw;
-  min-width: 30vw;
-  margin-top: 50px;
+  width: 25vw;
+  max-width: 25vw;
 }
 
 .tree-nav__item {
@@ -35,41 +34,24 @@
 
   font-size: 14px;
 
-  border: 1px solid var(--border-color);
-  border-top: none;
-  border-left: none;
+  border-bottom: 1px solid var(--border-color);
 
   &.first {
-    padding-left: 50px;
+    padding-left: 20px;
     border-top: 1px solid var(--border-color);
+  }
+
+  &__image {
+    transform: rotate(-90deg);
+
+    &.hidden {
+      visibility: hidden;
+    }
   }
 }
 
-.tree-nav__item .tree-nav__item {
-  margin: 0;
-}
-
-.tree-nav__item.is-expandable[open] > .tree-nav__item-title::before {
+.tree-nav__item.is-expandable[open] > .tree-nav__item-title > .tree-nav__item-title__image {
   transform: rotate(0deg);
-}
-
-.tree-nav__item.is-expandable > .tree-nav__item-title::before {
-  will-change: transform;
-  content: url("../../../assets/ListArrow.png");
-
-  position: absolute;
-  left: 0;
-  transform: rotate(-90deg);
-
-  display: inline-block;
-
-  width: 1.6rem;
-
-  font-size: 1.1rem;
-  color: rgb(255 0 0);
-  text-align: center;
-
-  transition: transform 300ms ease;
 }
 
 .tree-nav__item-title::-webkit-details-marker {
