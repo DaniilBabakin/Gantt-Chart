@@ -13,6 +13,8 @@
   }
 
   &__button {
+    cursor: pointer;
+
     display: flex;
     gap: 12px;
     align-items: center;
@@ -26,5 +28,11 @@
     background: var(--main-bg);
     border: 1px solid var(--border-color);
     border-radius: 10px;
+
+    transition: 0.2s ease all;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
   }
 }

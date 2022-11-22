@@ -1,0 +1,19 @@
+@import 'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100&display=swap';
+
+body {
+  overflow: hidden;
+
+  width: 100vw;
+  height: 100vw;
+  margin: 0;
+
+  font-family: Roboto,sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: Roboto,source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

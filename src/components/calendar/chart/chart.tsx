@@ -13,7 +13,6 @@ export const Chart = () => {
     tasks.forEach((el) => {
       const duration = el.dataset.duration!.split(";")
       const tasksStartDay = duration[0]
-      console.log(tasksStartDay)
       const endDay = duration[1]
       let left = 0,
         width = 0
@@ -27,7 +26,6 @@ export const Chart = () => {
         const filteredArray = daysArray.filter((day) => day.dataset.date == endDay)
         const offset = filteredArray[0].offsetLeft + filteredArray[0]?.parentElement!.parentElement!.offsetLeft
         if (offset) {
-          console.log(offset)
           width = offset + daysArray[1].offsetLeft - left
         }
       }
@@ -41,12 +39,12 @@ export const Chart = () => {
       el.style.opacity = "1"
     })
   }
-  const headerArray: any = []
+  const headerArray: { startDate: string; endDate: string; data: any }[] = []
   function createHeader(startDate: number) {
     let dateForCycle = moment.unix(startDate).subtract(1, "days").format("LLL") // Дата начала
 
     for (let week = 0; week < 8; week++) {
-      const listOfDays = []
+      const listOfDays: string[] = []
       let endDateForCycle = dateForCycle
 
       for (let day = 0; day < 7; day++) {
@@ -64,11 +62,11 @@ export const Chart = () => {
           .replace(/\b(\d{1})\b/g, "0$1"),
         data: (
           <ul className="chart__days">
-            {listOfDays.map((item: any) => {
-              console.log(item)
+            {listOfDays.map((item, index: number) => {
               return (
                 <li
-                  className="chart__days__item"
+                  className={`chart__days__item ${index >= 5 ? "small-opacity" : ""}`}
+                  key={`${item}-${index}`}
                   data-date={`${moment(item)
                     .format("M-D")
                     .replace(/\b(\d{1})\b/g, "0$1")}`}
@@ -89,20 +87,21 @@ export const Chart = () => {
 
   return (
     <div className="chart">
-      <div className="chart-wrapper">
+      <div className="chart__wrapper">
         <ul className="chart__values">
-          {headerArray.map((item: any) => (
-            <li className="chart__values__item">
+          {headerArray.map((item, index) => (
+            <li key={`${item.startDate}-${index}`} className="chart__values__item">
               <span className="chart__values__item__title">{`${item.startDate} - ${item.endDate}`}</span>
               {item.data}
             </li>
           ))}
         </ul>
         <ul className="chart-bars">
-          {chartData.chartBody.map((item: any) => {
+          {chartData.chartBody.map((item, index) => {
             return (
               <li
                 className="chart-bars__item"
+                key={`${item.title}-${index}`}
                 data-duration={`${item.startDate};${item.endDate}`}
                 data-color={`var(${backgroundColorAssign(item.nestedLvl)})`}
                 data-border={`var(${backgroundColorAssign(item.nestedLvl)})`.replace(
@@ -116,6 +115,7 @@ export const Chart = () => {
           })}
         </ul>
       </div>
+      <div className="chart__shadow"></div>
     </div>
   )
 }

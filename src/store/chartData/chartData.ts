@@ -1,8 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import chartDataJson from "./chartData.json"
-export interface ChartsDataState {
+
+export type ChartsBodyType = {
+  endDate: string
+  nestedLvl: number
+  startDate: string
+  title: string
+}
+
+export type ChartsDataState = {
   data: ChartDataType
-  chartBody: any[]
+  chartBody: ChartsBodyType[]
 }
 
 const initialState: ChartsDataState = {
@@ -17,7 +25,7 @@ export const chartsDataSlice = createSlice({
     updateChartsData: (state, action: PayloadAction<ChartDataType>) => {
       state.data = action.payload
     },
-    updateChartBody: (state, action: PayloadAction<any>) => {
+    updateChartBody: (state, action: PayloadAction<ChartsBodyType[]>) => {
       state.chartBody = action.payload
     },
   },

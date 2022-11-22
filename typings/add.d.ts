@@ -23,7 +23,7 @@ declare global {
     state: AppState,
     action: TAction
   ) => Promise<void>
-
+  
   module "*.png"
   module "*.svg"
   module "*.jpeg"
